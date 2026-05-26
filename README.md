@@ -148,6 +148,7 @@ This file should contain:
 # Weather API Configuration (Required)
 
 The application requires a weather API key in order to start correctly.
+Get your personal API here: https://openweathermap.org/api
 
 Configure the weather API settings inside:
 
