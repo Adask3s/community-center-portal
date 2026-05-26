@@ -1,0 +1,81 @@
+﻿@model DomKultury.Models.HomePageViewModel
+@{
+    ViewData["Title"] = "Strona Główna";
+}
+
+<!-- Hero sekcja -->
+<section class="hero-section text-white text-center py-5">
+    <div class="container">
+        <h1 class="display-3 fw-bold">Dom Kultury</h1>
+        <p class="lead">Twoja przestrzeń twórczości i wspólnoty</p>
+        <a href="@Url.Action("Index", "Zajecia")" class="btn btn-lg btn-hero mt-3 px-4">Zobacz zajęcia</a>
+        <a href="@Url.Action("Index", "Wydarzenia")" class="btn btn-lg btn-hero mt-3 px-4">Zobacz wydarzenia</a>
+    </div>
+</section>
+
+<!-- Pogoda -->
+@if (Model.Pogoda != null)
+{
+    <section class="container text-center">
+        <div class="weather-bar">
+            <img src="@($"https://openweathermap.org/img/wn/{Model.Pogoda.Icon}@2x.png")" alt="Pogoda" class="icon">
+            <span>Pogoda w @Model.Pogoda.City: <strong>@Model.Pogoda.Temperature°C</strong> | @Model.Pogoda.Description</span>
+        </div>
+    </section>
+}
+else
+{
+    <section class="container text-center">
+        <div class="alert alert-warning">Nie udało się pobrać danych pogodowych.</div>
+    </section>
+}
+
+
+<!-- Zajęcia -->
+<section class="container py-5">
+    <h2 class="mb-4 text-center">Nasze zajęcia</h2>
+    <div class="row g-4">
+        @foreach (var zajecie in Model.Zajecia)
+        {
+            <div class="col-md-4">
+                <div class="fancy-card">
+                    <div class="card-body">
+                        <h5 class="card-title">@zajecie.Nazwa</h5>
+                        <p>@zajecie.OpisKrotki</p>
+                        <p><strong>Start:</strong> @zajecie.Termin.ToString("dd.MM.yyyy")</p>
+                        <a class="btn btn-sm btn-primary" asp-controller="Zajecia" asp-action="Index">Więcej</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- Wydarzenia -->
+<section class="container py-5">
+    <h2 class="mb-4 text-center">Nadchodzące wydarzenia</h2>
+    <div class="row g-4">
+        @foreach (var wydarzenie in Model.Wydarzenia)
+        {
+            <div class="col-md-4">
+                <div class="event-card">
+                    <div class="card-body">
+                        <h5 class="card-title">@wydarzenie.Nazwa</h5>
+                        <p>@wydarzenie.OpisKrotki</p>
+                        <p><strong>Data:</strong> @wydarzenie.Data.ToString("dd.MM.yyyy")</p>
+                        <a class="btn btn-sm btn-primary" asp-controller="Wydarzenia" asp-action="Index">Więcej</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- O nas -->
+<section class="container py-5">
+    <div class="text-center">
+        <h2>Kim jesteśmy?</h2>
+        <p class="mt-3">Tworzymy miejsce, w którym każdy – niezależnie od wieku – znajdzie coś dla siebie. Inspirujemy, edukujemy i integrujemy przez sztukę.</p>
+        <a class="btn btn-hero mt-3" asp-controller="DowiedzSieWiecej" asp-action="Index"> Dowiedz się więcej </a>
+    </div>
+</section>

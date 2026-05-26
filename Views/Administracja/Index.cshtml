@@ -1,0 +1,71 @@
+﻿@model DomKultury.Controllers.TestViewModel
+
+@{
+    ViewData["Title"] = "Administracja – Podgląd bazy";
+}
+
+<div class="admin-wrapper">
+    <div class="admin-section">
+        <h2>Wydarzenia</h2>
+        <partial name="_TabelaAdmin" model="Model.Wydarzenia" />
+    </div>
+
+    <div class="admin-section">
+        <h2>Zajęcia</h2>
+        <partial name="_TabelaAdminZajecia" model="Model.Zajecia" />
+    </div>
+
+    <div class="admin-section">
+        <h2>Instruktorzy</h2>
+        <partial name="_TabelaAdminInstruktorzy" model="Model.Instruktorzy" />
+    </div>
+
+    <div class="admin-section">
+        <h2>Uczestnicy</h2>
+        <partial name="_TabelaAdminUczestnicy" model="Model.Uczestnicy" />
+    </div>
+
+    <div class="admin-section">
+        <h2>Kategorie</h2>
+        <partial name="_TabelaAdminKategorie" model="Model.Kategorie" />
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/admin-panel.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const cells = document.querySelectorAll('.table-admin td[contenteditable="true"]');
+
+            cells.forEach(cell => {
+                cell.addEventListener('focus', () => {
+                    cells.forEach(c => {
+                        if (c !== document.activeElement) {
+                            c.style.whiteSpace = "nowrap";
+                            c.style.overflow = "hidden";
+                            c.style.textOverflow = "ellipsis";
+                        }
+                    });
+
+                    cell.style.whiteSpace = "normal";
+                    cell.style.overflow = "visible";
+                    cell.style.textOverflow = "unset";
+                });
+            });
+
+            // Kliknięcie poza komórkami = zwinięcie wszystkich
+            document.addEventListener('click', function (e) {
+                if (![...cells].includes(e.target)) {
+                    cells.forEach(cell => {
+                        cell.style.whiteSpace = "nowrap";
+                        cell.style.overflow = "hidden";
+                        cell.style.textOverflow = "ellipsis";
+                    });
+                }
+            });
+        });
+    </script>
+
+
+}

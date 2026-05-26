@@ -1,0 +1,113 @@
+﻿@model List<DomKultury.Models.Zajecie>
+@{
+    ViewData["Title"] = "Zajęcia w Domu Kultury";
+}
+<link rel="stylesheet" href="~/css/site.css" />
+<link rel="stylesheet" href="~/css/events.css" />
+
+<div class="zajecia-page">
+    <!-- Nagłówek -->
+    <header class="zajecia-header text-center">
+        <i class="bi bi-mortarboard text-primary fs-1"></i>
+        <h1>Zajęcia</h1>
+        <p>Rozwijaj swoje umiejętności i pasje</p>
+        @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+        {
+            <a asp-action="Create" class="btn btn-hero mt-3">
+                <i class="bi bi-plus-circle"></i> Dodaj zajęcia
+            </a>
+        }
+    </header>
+
+    <!-- Lista zajęć -->
+    <main class="zajecia-list">
+        @if (!Model.Any())
+        {
+            <div class="alert alert-warning text-center">Brak dostępnych zajęć w tej chwili.</div>
+        }
+        else
+        {
+            @foreach (var zajecie in Model)
+            {
+                <div class="list-group-item p-4 mb-3 rounded shadow-sm border-0">
+                    <div class="row">
+                        <!-- Lewa kolumna: Obrazek z nałożoną datą -->
+                        <div class="col-md-3 text-center mb-3 mb-md-0 d-flex flex-column justify-content-center align-items-center">
+                            @if (!string.IsNullOrEmpty(zajecie.ObrazekUrl))
+                            {
+                                <div class="position-relative" style="width: 100%; max-width: 160px; height: 160px; border-radius: 0.5rem; overflow: hidden;">
+                                    <img src="@zajecie.ObrazekUrl" alt="Zdjęcie zajęć"
+                                         class="img-fluid rounded"
+                                         style="width: 100%; height: 100%; object-fit: cover;" />
+                                    <div class="date-overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center">
+                                        <strong class="fs-4 text-white">
+                                            @zajecie.Termin.ToString("dd")
+                                        </strong>
+                                        <span class="d-block text-white">
+                                            @zajecie.Termin.ToString("MMM", new System.Globalization.CultureInfo("pl-PL")).ToUpper()
+                                        </span>
+                                        <span class="d-block text-white">
+                                            @zajecie.Termin.ToString("yyyy")
+                                        </span>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="bg-primary text-white px-3 py-2 rounded">
+                                    <strong class="fs-4">@zajecie.Termin.ToString("dd")</strong>
+                                    <span class="d-block">@zajecie.Termin.ToString("MMM", new System.Globalization.CultureInfo("pl-PL")).ToUpper()</span>
+                                    <span class="d-block">@zajecie.Termin.ToString("yyyy")</span>
+                                </div>
+                            }
+                        </div>
+                        <!-- Prawa kolumna: Szczegóły zajęć -->
+                        <div class="col-md-9">
+                            <div class="d-flex justify-content-between flex-column flex-md-row mb-2">
+                                <h4 class="mb-1 text-dark fw-bold">@zajecie.Nazwa</h4>
+                            </div>
+                            <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i> @zajecie.Lokalizacja</p>
+                            <p class="mb-3">@zajecie.Opis</p>
+                            <ul class="list-unstyled mb-3">
+                                <li><strong>Termin:</strong> @zajecie.Termin.ToString("dddd, dd MMMM yyyy") o @zajecie.Termin.ToString("HH:mm")</li>
+                                <li><strong>Cena:</strong> @zajecie.Cena.ToString("F2") zł</li>
+                                <li><strong>Maks. uczestników:</strong> @zajecie.MaksymalnaLiczbaUczestnikow</li>
+                                @if (zajecie.Instruktor != null)
+                                {
+                                    <li><strong>Prowadzący:</strong> @zajecie.Instruktor.Imie @zajecie.Instruktor.Nazwisko</li>
+                                }
+                            </ul>
+                            <div class="d-flex flex-wrap gap-2">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a asp-action="Zapisz" asp-route-id="@zajecie.Id" class="btn btn-hero btn-sm">
+                                        <i class="bi bi-pencil-square"></i> Zapisz się
+                                    </a>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-hero btn-sm" onclick="alert('Aby zapisać się na zajęcia, proszę się zalogować!')">
+                                        <i class="bi bi-pencil-square"></i> Zapisz się
+                                    </button>
+                                }
+
+                                <a asp-action="Szczegoly" asp-route-id="@zajecie.Id" class="btn btn-hero btn-sm">
+                                    <i class="bi bi-info-circle"></i> Szczegóły
+                                </a>
+                                @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                                {
+                                    <a asp-action="Edit" asp-route-id="@zajecie.Id" class="btn btn-outline-dark btn-sm">
+                                        <i class="bi bi-pencil"></i> Edytuj
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@zajecie.Id" class="btn btn-outline-danger btn-sm">
+                                        <i class="bi bi-trash"></i> Usuń
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </main>
+</div>
