@@ -1,4 +1,4 @@
-# DomKultury — Community Portal
+# DomKultury - Community Portal
 
 A modern community portal built with ASP.NET Core (.NET 8), designed for cultural centers, local organizations, and community-driven initiatives. The platform provides event management, user authentication, administrative tools, and integrations with external services such as weather APIs.
 
@@ -93,8 +93,8 @@ dotnet tool install --global dotnet-ef
 # Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
-cd YOUR_REPOSITORY
+git clone https://github.com/Adask3s/community-center-portal.git
+cd community-center-portal
 ```
 
 ---
