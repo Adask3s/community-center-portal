@@ -290,7 +290,7 @@ for server-side PDF document generation.
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
-# Author
+# Authors
 
 **Adask3s**
 
@@ -298,3 +298,15 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 - Email: adam.kopystecki@gmail.com
 
 ---
+**xeadk**
+
+- GitHub: [xeadk](https://github.com/xeadk)
+
+---
+
+**gisztorowiczz**
+
+- GitHub: [gisztorowiczz](https://github.com/gisztorowiczz)
+
+---
+
